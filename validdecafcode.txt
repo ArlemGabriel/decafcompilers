@@ -1,0 +1,48 @@
+int y;
+int x;
+int main() {
+    int x;
+    int y;
+    x=8;
+    y=5;
+}
+void Num (int a){
+    return a;
+}
+void Sumar(){
+    int suma;
+    suma = x+y;
+    return;
+}
+void Restar(int z,int w){
+    int resta;
+    int x;
+    return z+w+x;
+}
+
+/*class Persona{
+    string cedula;
+    double peso;
+    double altura;
+    int edad;
+
+    int SetPeso(double pPeso){
+         peso = pPeso;
+    }
+    double GetPeso(){
+        return peso;
+    }
+
+}
+
+class Estudiante Extends Persona{
+    string carnet;
+
+    int SetCarnet(double pCarnet){
+         carnet = pCarnet;
+    }
+    double GetCarnet(){
+        return carnet;
+    }
+
+}*/
