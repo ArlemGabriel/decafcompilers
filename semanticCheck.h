@@ -383,18 +383,391 @@ void ValidateScopeClasses(){
     assigns = ScopeCheckingVariablesClasses(tb);
       //ScopeCheckingVariables(tb,typescope);
 }
+void createSimulation(){
+        type = "CLASS";
+        tokenTMP = "ID";
+        value1->value = "Persona";
+        value2->value = "";
+        rowTMP = 15;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "LBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 15;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "STRING";
+        tokenTMP = "Variable";
+        value1->value = "cedula";
+        value2->value = "";
+        rowTMP = 2;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "DOUBLE";
+        tokenTMP = "Variable";
+        value1->value = "peso";
+        value2->value = "";
+        rowTMP = 3;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "DOUBLE";
+        tokenTMP = "Variable";
+        value1->value = "altura";
+        value2->value = "";
+        rowTMP = 4;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "INT";
+        tokenTMP = "Variable";
+        value1->value = "edad";
+        value2->value = "";
+        rowTMP = 5;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "INT";
+        tokenTMP = "FunctionDecl";
+        value1->value = "SetPeso";
+        value2->value = "";
+        rowTMP = 7;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "DOUBLE";
+        tokenTMP = "Variable";
+        value1->value = "pPeso";
+        value2->value = "Func";
+        rowTMP = 7;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "LBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 10;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "ID";
+        tokenTMP = "Expr";
+        value1->value = "peso";
+        value2->value = "";
+        rowTMP = 8;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "ID";
+        tokenTMP = "Expr";
+        value1->value = "pPeso";
+        value2->value = "";
+        rowTMP = 8;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "ID";
+        tokenTMP = "Expr";
+        value1->value = "prueba";
+        value2->value = "";
+        rowTMP = 9;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "ID";
+        tokenTMP = "Expr";
+        value1->value = "pPrueba";
+        value2->value = "";
+        rowTMP = 9;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "RBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 10;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "DOUBLE";
+        tokenTMP = "FunctionDecl";
+        value1->value = "GetPeso";
+        value2->value = "";
+        rowTMP = 13;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "LBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 13;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "ID";
+        tokenTMP = "Expr";
+        value1->value = "peso";
+        value2->value = "";
+        rowTMP = 12;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "RBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 13;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "RBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 15;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "CLASS";
+        tokenTMP = "ID";
+        value1->value = "Estudiante";
+        value2->value = "";
+        rowTMP = 27;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "LBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 27;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "STRING";
+        tokenTMP = "Variable";
+        value1->value = "carnet";
+        value2->value = "";
+        rowTMP = 18;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "INT";
+        tokenTMP = "FunctionDecl";
+        value1->value = "SetCarnet";
+        value2->value = "";
+        rowTMP = 20;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "DOUBLE";
+        tokenTMP = "Variable";
+        value1->value = "pCarnet";
+        value2->value = "Func";
+        rowTMP = 20;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "LBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 22;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "INT";
+        tokenTMP = "Variable";
+        value1->value = "carnet";
+        value2->value = "";
+        rowTMP = 21;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "ID";
+        tokenTMP = "Expr";
+        value1->value = "carnet";
+        value2->value = "";
+        rowTMP = 21;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "ID";
+        tokenTMP = "Expr";
+        value1->value = "pCarnet";
+        value2->value = "";
+        rowTMP = 21;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "RBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 22;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "DOUBLE";
+        tokenTMP = "FunctionDecl";
+        value1->value = "GetCarnet";
+        value2->value = "";
+        rowTMP = 25;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "LBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 25;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "LBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 26;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "INT";
+        tokenTMP = "Expr";
+        value1->value = "hola";
+        value2->value = "";
+        rowTMP = 27;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "RBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 28;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "INT";
+        tokenTMP = "Expr";
+        value1->value = "carnet";
+        value2->value = "";
+        rowTMP = 29;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "RBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 30;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+        type = "";
+        tokenTMP = "RBRACE";
+        value1->value = "";
+        value2->value = "";
+        rowTMP = 31;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
+}
 void semanticCheck(pNodeParseTree root){
-    searchRelevantNodes(root);
-    /*cout << "\n\nOtros\n";
-    for(int i=0;i<elementsForSemanticCheck.size();i++){
+    //searchRelevantNodes(root);
+    createSimulation();
+    cout << "\n\nOtros\n";
+    /*for(int i=0;i<elementsForSemanticCheck.size();i++){
         cout<< "Type: " <<elementsForSemanticCheck.at(i)->type << "\tToken: " <<elementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<elementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<elementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<elementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<elementsForSemanticCheck.at(i)->columnE<<"\n";
     }
     cout << "\n\nGlobal\n";
     for(int i=0;i<globalElementsForSemanticCheck.size();i++){
         cout<< "Type: " <<globalElementsForSemanticCheck.at(i)->type << "\tToken: " <<globalElementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<globalElementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<globalElementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<globalElementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<globalElementsForSemanticCheck.at(i)->columnE<<"\n";
     }
-    cout << "\n\nClases\n";
-    for(int i=0;i<classElementsForSemanticCheck.size();i++){
+    cout << "\n\nClases\n";*/
+    /*for(int i=0;i<classElementsForSemanticCheck.size();i++){
         cout<< "Type: " <<classElementsForSemanticCheck.at(i)->type << "\tToken: " <<classElementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<classElementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<classElementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<classElementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<classElementsForSemanticCheck.at(i)->columnE<<"\n";
     }*/
 
@@ -404,5 +777,4 @@ void semanticCheck(pNodeParseTree root){
     ValidateScopeClasses();
 
     //TODO empezar a revisar los nodos de globalElementsForSemanticCheck y elementsForSemanticCheck, y utilizar la pila de tablas
-
 }

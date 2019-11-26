@@ -18,9 +18,13 @@ class Estudiante{
     string carnet;
 
     int SetCarnet(double pCarnet){
+         int carnet;
          carnet = pCarnet;
     }
     double GetCarnet(){
+        {
+            return hola;
+        }
         return carnet;
     }
 
