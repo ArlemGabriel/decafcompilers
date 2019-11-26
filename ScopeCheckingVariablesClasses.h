@@ -94,18 +94,18 @@ vector<pElementSCH> SearchGlobalVariablesClasses(vector<pElementSCH> tb){
     vector<pElementSCH> globaldecl;
     vector<pElementSCH> bracestoclose;
     for(stackpositions;stackpositions>=0;stackpositions--){
-      cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+      /*cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
       cout<< "Type: " <<tb.at(stackpositions)->type<<"\n";
       cout<<"\tToken: " <<tb.at(stackpositions)->tokenE<<"\n";
       cout<< "\tValue 1: " <<tb.at(stackpositions)->value1->value<<"\n";
       cout<< "\tValue 2: " <<tb.at(stackpositions)->value2->value<<"\n";
       cout<< "\tLine: " <<tb.at(stackpositions)->rowE<<"\n";
       cout<< "\tColumn: " <<tb.at(stackpositions)->columnE<<"\n";
-      cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+      cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";*/
           if(tb.at(stackpositions)->tokenE == "RBRACE"){
-            cout << "            ///////////////////////////////////////\n";
+            /*cout << "            ///////////////////////////////////////\n";
             cout << "            DECICION TOMADA: AGREGAR SCOPE PARA IGNORAR\n";
-            cout << "            ///////////////////////////////////////\n";
+            cout << "            ///////////////////////////////////////\n";*/
                 tb.at(stackpositions)->tokenE = "LBRACE";
                 bracestoclose.push_back(tb.at(stackpositions));
                 tb.at(stackpositions)->tokenE = "RBRACE";
@@ -209,7 +209,7 @@ vector<vector<pElementSCH> > SearchLocalVariablesClasses(TablesStack &tb, string
         cout<< "Type: " <<globalscopevariables.at(y)->type << "\tToken: " <<globalscopevariables.at(y)->tokenE << "\tValue 1: " <<globalscopevariables.at(y)->value1->value<< "\tValue 2: " <<globalscopevariables.at(y)->value2->value<< "\tLine: " <<globalscopevariables.at(y)->rowE<< "\tColumn: " <<globalscopevariables.at(y)->columnE<<"\n";
     }*/
 
-    cout << "-----------------------------------\n";
+    //cout << "-----------------------------------\n";
     globalsoflocals = SearchGlobalVariablesClasses(globalscopevariables);
 
     /*cout << "---------------ACLASS---------------\n";
@@ -261,24 +261,32 @@ void ChekingVariablesClasses(vector<vector<pElementSCH> > listofscopes){
     int localsdeclssize = localsdecls.size()-1;
     int globalsoflocalssize = globalsoflocals.size()-1;
 
-    if(!localsassigns.empty() && !localsdecls.empty()){
-        bool variableonscope;
-        for(int i=0;i<=localsassignssize;i++){
-            variableonscope = false;
-            for(int y=0;y<=localsdeclssize;y++){
-                if(localsassigns.at(i)->value1->value == localsdecls.at(y)->value1->value){
-                    variableonscope = true;
-                    if(localsdecls.at(y)->type != ""){
-                        localsassigns.at(i)->value2->value = localsdecls.at(y)->type;
-                        assignsvariablestypes.push_back(localsassigns.at(i));
+    if(!localsassigns.empty()){
+        if(!localsdecls.empty()){
+            bool variableonscope;
+            for(int i=0;i<=localsassignssize;i++){
+                variableonscope = false;
+                for(int y=0;y<=localsdeclssize;y++){
+                    if(localsassigns.at(i)->value1->value == localsdecls.at(y)->value1->value){
+                        variableonscope = true;
+                        if(localsdecls.at(y)->type != ""){
+                            localsassigns.at(i)->value2->value = localsdecls.at(y)->type;
+                            assignsvariablestypes.push_back(localsassigns.at(i));
+                        }
                     }
-                }
-                if(localsassigns.at(i)->value1->value != localsdecls.at(y)->value1->value){
-                    localtogloblalscope.push_back(localsassigns.at(i));
-                }
+                    if(localsassigns.at(i)->value1->value != localsdecls.at(y)->value1->value){
+                        localtogloblalscope.push_back(localsassigns.at(i));
+                    }
 
+                }
             }
         }
+        if(localsdecls.empty()){
+            for(int i=0;i<localsassigns.size();i++){
+                localtogloblalscope.push_back(localsassigns.at(i));
+            }
+        }
+
     }
     if(!localtogloblalscope.empty()){
         bool variableonscope;
@@ -351,7 +359,7 @@ void CheckVariables(vector<pElementSCH> aclass){
               scopes = SearchLocalVariablesClasses(tb,scopevalue);
               scopes = DeleteOtherValuesClasses(scopes);
               ChekingVariablesClasses(scopes);
-              /*for(int i=0;i<scopes.size();i++){
+              for(int i=0;i<scopes.size();i++){
                 if(i==0){
                     cout << "///////LOCAL ASSIGN///////\n";
                 }
@@ -366,7 +374,8 @@ void CheckVariables(vector<pElementSCH> aclass){
                   }
 
               }
-              cout << "+++//////////////////////////////////+\n";*/
+              cout << "//////////////////////////////////\n";
+              cout << "\n";
 
           }else{
               if(tbtemp.at(tbtempsize)->tokenE != "RBRACE" && !tb.isEmpty()){
