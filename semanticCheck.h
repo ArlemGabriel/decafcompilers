@@ -544,6 +544,16 @@ void createSimulation(){
         classElementsForSemanticCheck.push_back(newElement);
         restartVariables();
 
+        type = "DOUBLE";
+        tokenTMP = "FunctionDecl";
+        value1->value = "GetPeso";
+        value2->value = "";
+        rowTMP = 13;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
         type = "";
         tokenTMP = "LBRACE";
         value1->value = "";
