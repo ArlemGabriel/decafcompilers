@@ -17,6 +17,9 @@ vector<vector<pElementSCH > > classesattributes;
 vector<vector<pElementSCH > > classesmethods;
 vector<pElementSCH> assignsvariablestypes;
 
+
+vector<pElementSCH> repeatdeclaredvariableseclasses;
+
 void PrintErrorsScopeClasses(){
     if(!listsemanticerrorsscopeclasses.empty()){
         for(int i=0;i<listsemanticerrorsscopeclasses.size();i++){
@@ -28,6 +31,18 @@ void PrintErrorsScopeClasses(){
             cout << listsemanticerrorsscopeclasses.at(i)->GetColumn()<<" ";
             cout << listsemanticerrorsscopeclasses.at(i)->GetRow()<<"\n";
         }
+    }
+    if(!repeatdeclaredvariableseclasses.empty()){
+
+      for(int i=0;i<repeatdeclaredvariableseclasses.size();i++){
+          cout << "Redefinition Variable: ";
+          cout << repeatdeclaredvariableseclasses.at(i)->type<<" ";
+          cout << repeatdeclaredvariableseclasses.at(i)->tokenE<<" ";
+          cout << repeatdeclaredvariableseclasses.at(i)->value1->value<<" ";
+          cout << repeatdeclaredvariableseclasses.at(i)->value2->value<<" ";
+          cout << repeatdeclaredvariableseclasses.at(i)->columnE<<" ";
+          cout << repeatdeclaredvariableseclasses.at(i)->rowE<<"\n";
+      }
     }
 }
 void GetSeparateClasses(TablesStack &tb){
@@ -323,6 +338,53 @@ void ChekingVariablesClasses(vector<vector<pElementSCH> > listofscopes){
     }
 
 }
+/*vector<pElementSCH> SortDecl(vector<pElementSCH> declarations){
+    vector<string> namevariables;
+    vector<int> positions;
+    vector<pElementSCH> declarationssort;
+    for(int i=0;i<declarations.size();i++){
+        namevariables.push_back(declarations.at(i)->value1->value);
+    }
+    sort(namevariables.begin(), namevariables.end());
+    namevariables.erase(unique(namevariables.begin(), namevariables.end()), namevariables.end());
+    for(int i=0;i<namevariables.size();i++){
+        for(int y=0;y<declarations.size();y++){
+            if(namevariables.at(i) == declarations.at(y)->value1->value){
+                declarationssort.push_back(declarations.at(y));
+            }
+        }
+    }
+    return declarationssort;
+
+}*/
+void ChekingRepeatVariableDeclarationsClasses(vector<vector<pElementSCH> > listofscopes){
+  vector<pElementSCH> globalsdecl = listofscopes.at(1);
+  vector<pElementSCH> localsdecl = listofscopes.at(2);
+  vector<pElementSCH> duplicates;
+  int globalsdeclsize = globalsdecl.size()-1;
+  pElementSCH element;
+  if(!globalsdecl.empty()){
+        globalsdecl=SortDecl(globalsdecl);
+        for (int i = 1; i<globalsdecl.size(); i++){
+            if (globalsdecl.at(i-1)->value1->value == globalsdecl.at(i)->value1->value) {
+                    //cout << "-----ENTRE---\n";
+                  repeatdeclaredvariableseclasses.push_back(globalsdecl[i-1]);
+            }
+        }
+
+  }
+  if(!localsdecl.empty()){
+        localsdecl=SortDecl(localsdecl);
+
+        for (int i = 1; i<localsdecl.size(); i++){
+            if (localsdecl.at(i-1)->value1->value == localsdecl.at(i)->value1->value) {
+                    //cout << "-----ENTRE---\n";
+                  repeatdeclaredvariableseclasses.push_back(localsdecl[i-1]);
+            }
+        }
+  }
+
+}
 void CheckVariables(vector<pElementSCH> aclass){
 
       CheckGlobalVariablesClass(aclass);
@@ -353,6 +415,7 @@ void CheckVariables(vector<pElementSCH> aclass){
               scopes = SearchLocalVariablesClasses(tb,scopevalue);
               scopes = DeleteOtherValuesClasses(scopes);
               ChekingVariablesClasses(scopes);
+              ChekingRepeatVariableDeclarationsClasses(scopes);
           }else{
               if(tbtemp.at(tbtempsize)->tokenE != "RBRACE" && !tb.isEmpty()){
                   tb.Pop();
