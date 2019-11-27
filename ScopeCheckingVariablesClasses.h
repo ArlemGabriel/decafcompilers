@@ -3,7 +3,12 @@
 
 #include <vector>
 #include "stacktables.h"
+#include "semanticerrors.h"
+#include <algorithm>
+typedef SemanticError * pSemanticError;
 
+pSemanticError errorScopeClasses;
+vector<pSemanticError> listsemanticerrorsscopeclasses;
 
 vector<string> semanticerrorsclasses;
 vector<pElementSCH> classattributes;
@@ -12,6 +17,19 @@ vector<vector<pElementSCH > > classesattributes;
 vector<vector<pElementSCH > > classesmethods;
 vector<pElementSCH> assignsvariablestypes;
 
+void PrintErrorsScopeClasses(){
+    if(!listsemanticerrorsscopeclasses.empty()){
+        for(int i=0;i<listsemanticerrorsscopeclasses.size();i++){
+            cout << listsemanticerrorsscopeclasses.at(i)->GetTypeError()<<" ";
+            cout << listsemanticerrorsscopeclasses.at(i)->GetType()<<" ";
+            cout << listsemanticerrorsscopeclasses.at(i)->GetToken()<<" ";
+            cout << listsemanticerrorsscopeclasses.at(i)->GetValue1()<<" ";
+            cout << listsemanticerrorsscopeclasses.at(i)->GetValue2()<<" ";
+            cout << listsemanticerrorsscopeclasses.at(i)->GetColumn()<<" ";
+            cout << listsemanticerrorsscopeclasses.at(i)->GetRow()<<"\n";
+        }
+    }
+}
 void GetSeparateClasses(TablesStack &tb){
     int stackpositions = tb.GetStackSize()-1;
     vector<pElementSCH> bracestoclose;
@@ -203,22 +221,10 @@ vector<vector<pElementSCH> > SearchLocalVariablesClasses(TablesStack &tb, string
 
     vector<pElementSCH> globalscopevariables = tb.GetStackFromValue(finalscopeposition);
 
-    /*cout << "---------------ACLASS---------------\n";
 
-    for(int y=0;y<globalscopevariables.size();y++){
-        cout<< "Type: " <<globalscopevariables.at(y)->type << "\tToken: " <<globalscopevariables.at(y)->tokenE << "\tValue 1: " <<globalscopevariables.at(y)->value1->value<< "\tValue 2: " <<globalscopevariables.at(y)->value2->value<< "\tLine: " <<globalscopevariables.at(y)->rowE<< "\tColumn: " <<globalscopevariables.at(y)->columnE<<"\n";
-    }*/
-
-    //cout << "-----------------------------------\n";
     globalsoflocals = SearchGlobalVariablesClasses(globalscopevariables);
 
-    /*cout << "---------------ACLASS---------------\n";
 
-    for(int y=0;y<globalsoflocals.size();y++){
-        cout<< "Type: " <<globalsoflocals.at(y)->type << "\tToken: " <<globalsoflocals.at(y)->tokenE << "\tValue 1: " <<globalsoflocals.at(y)->value1->value<< "\tValue 2: " <<globalsoflocals.at(y)->value2->value<< "\tLine: " <<globalsoflocals.at(y)->rowE<< "\tColumn: " <<globalsoflocals.at(y)->columnE<<"\n";
-    }
-
-    cout << "-----------------------------------\n";*/
     listscopes.push_back(localsassigns);
     listscopes.push_back(localsdecls);
     listscopes.push_back(globalsoflocals);
@@ -271,7 +277,13 @@ void ChekingVariablesClasses(vector<vector<pElementSCH> > listofscopes){
                         variableonscope = true;
                         if(localsdecls.at(y)->type != ""){
                             localsassigns.at(i)->value2->value = localsdecls.at(y)->type;
+                            //DESCOMENTAR AQUI
                             assignsvariablestypes.push_back(localsassigns.at(i));
+                            /*if (find(assignsvariablestypes.begin(), assignsvariablestypes.end(), localsassigns.at(i)) != assignsvariablestypes.end() ){
+                                  //DONOTHING
+                            }else{
+                                  assignsvariablestypes.push_back(localsassigns.at(i));
+                            }*/
                         }
                     }
                     if(localsassigns.at(i)->value1->value != localsdecls.at(y)->value1->value){
@@ -304,14 +316,8 @@ void ChekingVariablesClasses(vector<vector<pElementSCH> > listofscopes){
                 }
             }
             if(variableonscope==false){
-                cout << "ERROR UNDECLARED VARIABLE\n";
-                cout << "Type; " <<localtogloblalscope.at(i)->type<<"\n";
-                cout << "Token; " <<localtogloblalscope.at(i)->tokenE<<"\n";
-                cout << "Value1; " <<localtogloblalscope.at(i)->value1->value<<"\n";
-                cout << "Value2; " <<localtogloblalscope.at(i)->value2->value<<"\n";
-                cout << "Row; " <<localtogloblalscope.at(i)->rowE<<"\n";
-                cout << "Column; " <<localtogloblalscope.at(i)->columnE<<"\n";
-                //undeclaredvariables.push_back(localtogloblalscope.at(i));
+                errorScopeClasses = new SemanticError("UndeclaredClassVariable",localtogloblalscope.at(i));
+                listsemanticerrorsscopeclasses.push_back(errorScopeClasses);
             }
         }
     }
@@ -338,18 +344,6 @@ void CheckVariables(vector<pElementSCH> aclass){
 
       tbtemp.Pop();
       tb.Pop();
-      /*for(int i=0;i<tb.GetStackSize();i++){
-        cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-        cout<< "Type: " <<tb.at(i)->type<<"\n";
-        cout<<"\tToken: " <<tb.at(i)->tokenE<<"\n";
-        cout<< "\tValue 1: " <<tb.at(i)->value1->value<<"\n";
-        cout<< "\tValue 2: " <<tb.at(i)->value2->value<<"\n";
-        cout<< "\tLine: " <<tb.at(i)->rowE<<"\n";
-        cout<< "\tColumn: " <<tb.at(i)->columnE<<"\n";
-        cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-      }*/
-
-
       int tbtempsize = tbtemp.GetStackSize()-1;
 
       for(tbtempsize;tbtempsize>=0;tbtempsize--){
@@ -359,24 +353,6 @@ void CheckVariables(vector<pElementSCH> aclass){
               scopes = SearchLocalVariablesClasses(tb,scopevalue);
               scopes = DeleteOtherValuesClasses(scopes);
               ChekingVariablesClasses(scopes);
-              for(int i=0;i<scopes.size();i++){
-                if(i==0){
-                    cout << "///////LOCAL ASSIGN///////\n";
-                }
-                if(i==1){
-                    cout << "///////LOCAL DECL////////\n";
-                }
-                if(i==2){
-                    cout << "///////LOCAL GLOBALES////////\n";
-                }
-                  for(int y=0;y<scopes.at(i).size();y++){
-                      cout<< "Type: " <<scopes.at(i).at(y)->type << "\tToken: " <<scopes.at(i).at(y)->tokenE << "\tValue 1: " <<scopes.at(i).at(y)->value1->value<< "\tValue 2: " <<scopes.at(i).at(y)->value2->value<< "\tLine: " <<scopes.at(i).at(y)->rowE<< "\tColumn: " <<scopes.at(i).at(y)->columnE<<"\n";
-                  }
-
-              }
-              cout << "//////////////////////////////////\n";
-              cout << "\n";
-
           }else{
               if(tbtemp.at(tbtempsize)->tokenE != "RBRACE" && !tb.isEmpty()){
                   tb.Pop();
@@ -386,7 +362,7 @@ void CheckVariables(vector<pElementSCH> aclass){
     }
 }
 //Valida las variables en scopes globales y locales
-vector<vector<pElementSCH > > ScopeCheckingVariablesClasses(TablesStack &tb){
+vector<pElementSCH > ScopeCheckingVariablesClasses(TablesStack &tb){
     vector<vector<pElementSCH> > scopes;
     int listofclassestempsize;
     string scopevalue = " ";
@@ -397,13 +373,63 @@ vector<vector<pElementSCH > > ScopeCheckingVariablesClasses(TablesStack &tb){
         listofclassestemp = listofclasses.at(i);
         CheckVariables(listofclassestemp);
     }
-
-    printSemanticErrors();
-    elementsi.push_back(assignsvariables);
-    return elementsi;
+    PrintErrorsScopeClasses();
+    assignsvariablestypes.erase(unique(assignsvariablestypes.begin(), assignsvariablestypes.end()), assignsvariablestypes.end());
+    return assignsvariablestypes;
 }
 
+vector<vector<pElementSCH > > GetAllAttributes(){
+    return classesattributes;
+}
+vector<vector<pElementSCH > > GetAllMethods(){
+    return classesmethods;
+}
 //para imprimir
+
+/*cout << "---------------ACLASS---------------\n";
+
+for(int y=0;y<globalscopevariables.size();y++){
+    cout<< "Type: " <<globalscopevariables.at(y)->type << "\tToken: " <<globalscopevariables.at(y)->tokenE << "\tValue 1: " <<globalscopevariables.at(y)->value1->value<< "\tValue 2: " <<globalscopevariables.at(y)->value2->value<< "\tLine: " <<globalscopevariables.at(y)->rowE<< "\tColumn: " <<globalscopevariables.at(y)->columnE<<"\n";
+}*/
+
+//cout << "-----------------------------------\n";
+
+/*cout << "---------------ACLASS---------------\n";
+
+for(int y=0;y<globalsoflocals.size();y++){
+    cout<< "Type: " <<globalsoflocals.at(y)->type << "\tToken: " <<globalsoflocals.at(y)->tokenE << "\tValue 1: " <<globalsoflocals.at(y)->value1->value<< "\tValue 2: " <<globalsoflocals.at(y)->value2->value<< "\tLine: " <<globalsoflocals.at(y)->rowE<< "\tColumn: " <<globalsoflocals.at(y)->columnE<<"\n";
+}
+
+cout << "-----------------------------------\n";*/
+
+/*for(int i=0;i<tb.GetStackSize();i++){
+  cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+  cout<< "Type: " <<tb.at(i)->type<<"\n";
+  cout<<"\tToken: " <<tb.at(i)->tokenE<<"\n";
+  cout<< "\tValue 1: " <<tb.at(i)->value1->value<<"\n";
+  cout<< "\tValue 2: " <<tb.at(i)->value2->value<<"\n";
+  cout<< "\tLine: " <<tb.at(i)->rowE<<"\n";
+  cout<< "\tColumn: " <<tb.at(i)->columnE<<"\n";
+  cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+}*/
+
+/*for(int i=0;i<scopes.size();i++){
+  if(i==0){
+      cout << "///////LOCAL ASSIGN///////\n";
+  }
+  if(i==1){
+      cout << "///////LOCAL DECL////////\n";
+  }
+  if(i==2){
+      cout << "///////LOCAL GLOBALES////////\n";
+  }
+    for(int y=0;y<scopes.at(i).size();y++){
+        cout<< "Type: " <<scopes.at(i).at(y)->type << "\tToken: " <<scopes.at(i).at(y)->tokenE << "\tValue 1: " <<scopes.at(i).at(y)->value1->value<< "\tValue 2: " <<scopes.at(i).at(y)->value2->value<< "\tLine: " <<scopes.at(i).at(y)->rowE<< "\tColumn: " <<scopes.at(i).at(y)->columnE<<"\n";
+    }
+
+}
+cout << "//////////////////////////////////\n";
+cout << "\n";*/
 /*cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 cout<< "Type: " <<tb.at(stackpositions)->type<<"\n";
 cout<<"\tToken: " <<tb.at(stackpositions)->tokenE<<"\n";

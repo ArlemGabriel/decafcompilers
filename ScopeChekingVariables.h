@@ -352,7 +352,7 @@ vector<vector<pElementSCH> > SearchLocalVariables(TablesStack &tb, string scopev
     return listscopes;
 }
 //Valida las variables en scopes globales y locales
-vector<vector<pElementSCH > > ScopeCheckingVariables(TablesStack &tb){
+vector<pElementSCH > ScopeCheckingVariables(TablesStack &tb){
     vector<pElementSCH> tbtemp = tb.GetTableStack();
     vector<vector<pElementSCH> > scopes;
     int stackpositions = tbtemp.size()-1;
@@ -380,8 +380,7 @@ vector<vector<pElementSCH > > ScopeCheckingVariables(TablesStack &tb){
             }
       }
         printSemanticErrors();
-        elementsi.push_back(assignsvariables);
-        return elementsi;
+        return assignsvariables;
 }
 
 

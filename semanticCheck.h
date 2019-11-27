@@ -12,6 +12,12 @@ std::vector<pElementSCH> elementsForSemanticCheck;
 std::vector<pElementSCH> globalElementsForSemanticCheck;
 std::vector<pElementSCH> classElementsForSemanticCheck;
 std::vector<vector<pElementSCH > > assigns;
+std::vector<pElementSCH> functionsassigns;
+std::vector<pElementSCH> classesassigns;
+
+vector<vector<pElementSCH > > listclassesattributes;
+vector<vector<pElementSCH > > listclassesmethods;
+
 
 
 bool flagGlobalScope=true;
@@ -344,7 +350,7 @@ void InsertScopesOnStack(string typeValidation,TablesStack &tb){
     //Inserta en la pila los scopes para validar los scopes de clases
     if(typeValidation=="Classes"){
         //cout << <<"\n";
-        cout << classElementsForSemanticCheck.size()<<"\n";
+        //cout << classElementsForSemanticCheck.size()<<"\n";
         for(int i=0; i<classElementsForSemanticCheck.size();i++){
             tb.Push(classElementsForSemanticCheck.at(i));
         }
@@ -359,29 +365,33 @@ void ValidateScopeFunctions(){
     cout << "--------------------------------------------------------------\n";
     cout << "--------------------------------------------------------------\n";*/
     tb.DeleteStructureBraces();
-    assigns = ScopeCheckingVariables(tb);
+    functionsassigns = ScopeCheckingVariables(tb);
     //tb.printStack();
 }
 void ValidateTypes(){
     TablesStack tb;
-    InsertScopesOnStack("AllStack",tb);
+    InsertScopesOnStack("Classes",tb);
     tb.SetBracesIndex();
     tb.SetBracesOwner();
     tb.DeleteStructureBraces();
-    TypesCheckingPrimitiveVariables(tb,assigns.at(0));
+    //TypesCheckingPrimitiveVariables(tb,functionsassigns);
+    //cout << "ENTRE";
+    TypesCheckingPrimitiveVariables(tb,classesassigns);
 }
 void ValidateScopeClasses(){
     TablesStack tb;
     InsertScopesOnStack("Classes",tb);
     tb.SetBracesIndex();
     tb.SetBracesOwner();
-    //tb.printStack();
-    //cout << "--------------------------------------------------------------\n";
-    //cout << "--------------------------------------------------------------\n";
+    /*tb.printStack();
+    cout << "--------------------------------------------------------------\n";
+    cout << "         CLASSES                                              \n";
+    cout << "--------------------------------------------------------------\n";*/
     tb.DeleteStructureBraces();
     //tb.printStack();
-    assigns = ScopeCheckingVariablesClasses(tb);
-      //ScopeCheckingVariables(tb,typescope);
+    classesassigns = ScopeCheckingVariablesClasses(tb);
+    listclassesmethods = GetAllMethods();
+    listclassesattributes = GetAllAttributes();
 }
 void createSimulation(){
         type = "CLASS";
@@ -644,6 +654,16 @@ void createSimulation(){
         classElementsForSemanticCheck.push_back(newElement);
         restartVariables();
 
+        type = "INT";
+        tokenTMP = "Variable";
+        value1->value = "carnet";
+        value2->value = "";
+        rowTMP = 67;
+        columnTMP = 0;
+        newElement= new ElementSCH(type,tokenTMP, value1,value2,rowTMP,columnTMP);
+        classElementsForSemanticCheck.push_back(newElement);
+        restartVariables();
+
         type = "ID";
         tokenTMP = "Expr";
         value1->value = "carnet";
@@ -758,23 +778,25 @@ void createSimulation(){
 void semanticCheck(pNodeParseTree root){
     //searchRelevantNodes(root);
     createSimulation();
-    cout << "\n\nOtros\n";
-    /*for(int i=0;i<elementsForSemanticCheck.size();i++){
-        cout<< "Type: " <<elementsForSemanticCheck.at(i)->type << "\tToken: " <<elementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<elementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<elementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<elementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<elementsForSemanticCheck.at(i)->columnE<<"\n";
-    }
-    cout << "\n\nGlobal\n";
-    for(int i=0;i<globalElementsForSemanticCheck.size();i++){
-        cout<< "Type: " <<globalElementsForSemanticCheck.at(i)->type << "\tToken: " <<globalElementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<globalElementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<globalElementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<globalElementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<globalElementsForSemanticCheck.at(i)->columnE<<"\n";
-    }
-    cout << "\n\nClases\n";*/
-    /*for(int i=0;i<classElementsForSemanticCheck.size();i++){
-        cout<< "Type: " <<classElementsForSemanticCheck.at(i)->type << "\tToken: " <<classElementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<classElementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<classElementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<classElementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<classElementsForSemanticCheck.at(i)->columnE<<"\n";
-    }*/
 
     //Llamada para validar scopes en funciones y variables
     //ValidateScopeFunctions();
-    //ValidateTypes();
     ValidateScopeClasses();
+    //createSimulation();
+    ValidateTypes();
+
 
     //TODO empezar a revisar los nodos de globalElementsForSemanticCheck y elementsForSemanticCheck, y utilizar la pila de tablas
 }
+/*cout << "\n\nOtros\n";
+for(int i=0;i<elementsForSemanticCheck.size();i++){
+    cout<< "Type: " <<elementsForSemanticCheck.at(i)->type << "\tToken: " <<elementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<elementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<elementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<elementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<elementsForSemanticCheck.at(i)->columnE<<"\n";
+}
+cout << "\n\nGlobal\n";
+for(int i=0;i<globalElementsForSemanticCheck.size();i++){
+    cout<< "Type: " <<globalElementsForSemanticCheck.at(i)->type << "\tToken: " <<globalElementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<globalElementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<globalElementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<globalElementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<globalElementsForSemanticCheck.at(i)->columnE<<"\n";
+}
+cout << "\n\nClases\n";*/
+/*for(int i=0;i<classElementsForSemanticCheck.size();i++){
+    cout<< "Type: " <<classElementsForSemanticCheck.at(i)->type << "\tToken: " <<classElementsForSemanticCheck.at(i)->tokenE << "\tValue 1: " <<classElementsForSemanticCheck.at(i)->value1->value<< "\tValue 2: " <<classElementsForSemanticCheck.at(i)->value2->value<< "\tLine: " <<classElementsForSemanticCheck.at(i)->rowE<< "\tColumn: " <<classElementsForSemanticCheck.at(i)->columnE<<"\n";
+}*/
